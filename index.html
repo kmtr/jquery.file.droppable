@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>file</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="jquery.file.droppable.js"></script>
+<style>
+#droppable {border:thin solid black;height:200px;border-radius:10px;}
+#droppable.dragEnter {background:#03e;}
+</style>
+</head>
+<body>
+<div id="droppable"></div>
+<script>
+$('#droppable').fileDroppable({
+dragEnterClass : 'dragEnter',
+dragenter: function(e, target){
+console.log(e.type , e, target);
+e.preventDefault();
+},
+drop: function(e, target){
+console.log(e.type , e, target);
+e.preventDefault();
+},
+dragleave: function(e, target){
+console.log(e.type , e, target);
+e.preventDefault();
+}
+});
+</script>
+</section>
+</body>
+</html>
