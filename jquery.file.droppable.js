@@ -1,36 +1,23 @@
 (function(jQuery){
   function _default(e, target){e.preventDefault();};
 
-  var _option = {
-    disabled : false,
-dragenter : _default,
-dragover : _default,
-drop : _default,
-dragleave : _default,
-dragEnterClass : null
-  };
-
   jQuery.fn.fileDroppable = function(options){
     var options = jQuery.extend(
       {
-        disabled : _option.disabled,
-        dragenter : _option.dragenter,
-        dragover : _option.dragover,
-        drop : _option.drop,
-        dragleave : _option.dragleave,
-        dragEnterClass: _option.dragEnterClass
+        disabled : false,
+        dragenter : _default,
+        dragover : _default,
+        drop : _default,
+        dragleave : _default,
+        dragEnterClass: null
       }, options);
-    _option.dragEnterClass = options.dragEnterClass;
-    _option.dragenter = options.dragenter;
-    _option.dragover = options.dragover;
-    _option.drop = options.drop;
-    _option.dragleave = options.dragleave;
     this.each(function(){
+      $(this).prop('options', options);
       $(this).on({
-        dragenter : _dragenter,
-        dragover : _dragover,
-        drop : _drop,
-        dragleave : _dragleave,
+        dragenter : options.dragenter,
+        dragover : options.dragover,
+        drop : options.drop,
+        dragleave : options.dragleave,
       }, {target : this});
     });
   };
