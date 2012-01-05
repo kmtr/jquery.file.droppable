@@ -1,40 +1,39 @@
 (function(jQuery){
   function _default(e, target){e.preventDefault();};
 
+  var _option = {
+    disabled : false,
+dragenter : _default,
+dragover : _default,
+drop : _default,
+dragleave : _default,
+dragEnterClass : ""
+  };
+
   jQuery.fn.fileDroppable = function(options){
-    var options = jQuery.extend(
-      {
-        disabled : false,
-        dragenter : _default,
-        dragover : _default,
-        drop : _default,
-        dragleave : _default,
-        dragEnterClass: null
-      }, options);
-    this.each(function(){
-      $(this).prop('options', options);
+    var options = jQuery.extend(_option, options);
+    return this.each(function(){
       $(this).on({
-        dragenter : options.dragenter,
-        dragover : options.dragover,
-        drop : options.drop,
-        dragleave : options.dragleave,
+        dragenter : _dragenter,
+        dragover : _dragover,
+        drop : _drop,
+        dragleave : _dragleave,
       }, {target : this});
     });
   };
   jQuery.fn.fileDroppable.option = function(key, value){
-    if(key){
-      if(value != null && typeof(value) !== 'undefined'){
-        _option[key] = value;
-        return _option[key];
-      }else{
-        return _option[key];
-      }
+    var l = arguments.length;
+    if(l == 1){
+      return _option[key];
+    }else if(l == 2){
+      _option[key] = value;
+      return $(this);
     }else{
       return _option;
     }
   };
   function _dragenter(e){
-    if(!_option.disabled && _option.dragEnterClass){
+    if(!_option.disabled){
       $(e.data.target).addClass(_option.dragEnterClass);
     }
     _do(_option.dragenter, e, e.data.target);
@@ -43,13 +42,13 @@
     _do(_option.dragover, e);
   }
   function _drop(e){
-    if(!_option.disabled && _option.dragEnterClass){
+    if(!_option.disabled){
       $(e.data.target).removeClass(_option.dragEnterClass);
     }
     _do(_option.drop, e);
   }
   function _dragleave(e){
-    if(!_option.disabled && _option.dragEnterClass){
+    if(!_option.disabled){
       $(e.data.target).removeClass(_option.dragEnterClass);
     }
     _do(_option.dragleave, e);
